@@ -2,16 +2,18 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, confusion_matrix
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
+from sklearn import tree
+import seaborn as sns
 
 class Node:
     def __init__(self, label):
-        self.label = label
-        self.best_attribute_idx = 0
-        self.best_splitting_threshold = 0
-        self.left_branch = None
-        self.right_branch = None
-        self.gini = 0
+        self.label = label # nhãn của node nếu node đó là node lá
+        self.best_attribute_idx = 0 # thuộc tính để phân tách dữ liệu thành 2 node con
+        self.best_splitting_threshold = 0 # ngưỡng phân tách dữ liệu thành 2 node con
+        self.left_branch = None # node con trái
+        self.right_branch = None # node con phải
+        self.gini = 0 # giá trị gini
 
     def set_left_branch(self, left_branch):
         self.left_branch = left_branch
@@ -141,11 +143,21 @@ class CartDecisionTree:
 
 if __name__ == "__main__":
     from sklearn.datasets import load_iris
-    dataset = load_iris()
-    X, y = dataset.data, dataset.target
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4)
-    clf = CartDecisionTree(max_depth = 20)
-    clf.fit(X_train, y_train)
-    print(clf.root)
-    print(clf.predict(X_test))
-    print(confusion_matrix(clf.predict(X_test), y_test))
+    X, y = load_iris(return_X_y=True)
+    print("Kích thước bộ dữ liêu:", X.shape)
+    skf = StratifiedKFold(n_splits=5)
+    scores = []
+    for train_idx, test_idx in skf.split(X, y):
+        # clf = CartDecisionTree(max_depth = 20)
+        clf = tree.DecisionTreeClassifier(max_depth=20)
+        train_data = X[train_idx]
+        train_target = y[train_idx]
+        test_data = X[test_idx]
+        test_target = y[test_idx]
+
+        clf.fit(train_data, train_target)
+        y_pred = clf.predict(test_data)
+        score = accuracy_score(y_pred, test_target)
+        scores.append(score)
+    scores = np.array(scores)
+    print("%0.2f accuracy with a standard deviation of %0.2f" % (scores.mean(), scores.std()))
