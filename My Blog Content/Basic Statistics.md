@@ -1,5 +1,6 @@
 # Xác suất thống kê
 
+
 Một trong những câu nói hài hước mà mình rất thích đó là: ***"Vì tao chắc chắn là trên đời này không có gì là chắc chắn..."***.
 
 Bạn đang sống trong một thời đại ***biến thiên vạn hóa***, hay nói cách khác, nhiều thứ trong cuộc sống luôn mang những tính không chắc chắn trong đó.
@@ -226,8 +227,8 @@ P(A|B) = \frac{P(B|A)P(A)}{P(B)}
 + $P(B|A)$ còn được gọi là ***Likelihood***
 + $P(A|B)$ còn được gọi là ***Posterior*** (Xác suất hậu nghiệm)
 
-## 1.2. Biến ngẫu nhiên và một số phân bố xác suất cơ bản
-### 1.2.1 Biến ngẫu nhiên
+## 2. Biến ngẫu nhiên và một số phân bố xác suất cơ bản
+### 2.1 Biến ngẫu nhiên
 
 Biến ngẫu nhiên là khái niệm phụ thuộc vào kết cục của 1 phép thử ngẫu nhiên nào đó, được sinh ra giúp dễ dàng làm việc vơi các sự kiện ngẫu nhiên
 
@@ -237,7 +238,7 @@ Ví dụ: Gieo một con xúc xắc thì ***số chấm xuất hiện*** là m�
 
 + Biến ngẫu nhiên được gọi là liên tục ***(continuos)*** nếu miien giá trị của nó là một đoạn $[a, b] \subset R$ hoặc $(-\infty, +\infty)$. Ví dụ: Chiều cao, cân nặng
 
-### 1.2.2 Luật phân phối xác suất
+### 2.2 Luật phân phối xác suất
 
 Đối với biến rời rạc $X$ thì mỗi giá trị của nó tương ứng với với xác suất đặ trưng cho khả năng biến ngẫu nhiên nhận giá trị đó $p_i = P(X=x_i)$
 
@@ -312,7 +313,7 @@ Ta có: $P(x_1 \le X < x_2) = \int_{x_1}^{x_2}f(x)dx$
 + $f(x) \ge 0$
 + Do $F(-\infty) = 0$ và $F(+\infty) = 0$ nên: $\int_{-\infty}^{+\infty}f(x) = 1$
 
-### 1.2.3 Một số đặc trưng của biến ngẫu nhiên không biết là không được
+### 2.3 Một số đặc trưng của biến ngẫu nhiên không biết là không được
 
 + ***Kì vọng của 1 biến ngẫu nhiên X, kí hiệu là $EX$***. Kỳ vọng còn được gọi là ***trị trung bình*** của $X$. Khác với ***giá trị trung bình*** là trung bình cộng của các giá trị. Trong thực tế chúng ta đo $X$ nhiều lần và lấy giá trị trung bình cộng, khi số lần đó càng lớn thì giá trị trung bình càng gần $EX$
     + $X$ là biến rời rạc với hàm xác suất $p(x)$:
@@ -335,7 +336,7 @@ Ta có: $P(x_1 \le X < x_2) = \int_{x_1}^{x_2}f(x)dx$
     $VX = \sum\limits_{x_i}(x_i - EX)^2p(X=x_i)$ 
 
     + $X$ là biến liên tục với hàm mật độ $f(x)$: 
-    $EX = \int_{-\infty}^{+\infty}(x - EX)^2f(x)dx$
+    $VX = \int_{-\infty}^{+\infty}(x - EX)^2f(x)dx$
     + Một số tính chất:
         + $Vc = 0$, $c$ là hằng số
         + $V(cX) = c^2VX$
@@ -343,9 +344,38 @@ Ta có: $P(x_1 \le X < x_2) = \int_{x_1}^{x_2}f(x)dx$
 
 + ***Độ lệch chuẩn***: $\sigma(X) = \sqrt{VX}$
 
-+ ***Phân vị k% của $X$:*** là một là giá trị t của $X$ sao cho $F(t) = k/100$
++ ***Phân vị k% của $X$:*** là một là giá trị $t$ của $X$ sao cho $F(t) = k/100$
 + ***Trung vị*** là một trường hợp đặc biệt của ***phân vị*** với ***k = 50***, kí hiệu là $medX$
 
-## 1.3 Một số phân phối bạn hay gặp
+## 3 Một số phân phối bạn hay gặp
 
-### 1.3.1 Phân phối đều
+### 3.1 Phân phối đều
+
++ Đối với ***biến rời rạc***: Ta gọi biến $X$ tuân theo phân phối đều nếu $X$ có bảng phân phối xác suất dạng như sau
+
+
+    | $X=x_i$ | 1 | 2 |... | n |
+    | -------- | -------- | -------- |-------- |-------- |
+    | $p(X=x_i)$     | $\frac{1}{n}$     | $\frac{1}{n}$     |...    |$\frac{1}{n}$     |
+    
+    ***Ta có:*** 
+    + $EX = \sum\limits_{x_i}x_ip(x_i) = 1 * \frac{1}{n} + 2 * \frac{1}{n} + .. + n * \frac{1}{n} = \frac{n * (n + 1) / 2}{n} = \frac{n + 1}{2}$
+
+    + $VX = E(X^2) - (EX) ^ 2 = \frac{1^2 + 2^2 + ... + n^2}{n} - (\frac{n + 1}{2}) ^ 2 = \frac{n^2 -1}{12}$, do $\sum\limits_{i = 1}^ni^2 = \frac{n(n+1)(2n+1)}{12}$. Bạn xem chứng minh cở bản tại ***[đây](https://hoc247.net/hoi-dap/toan-6/tinh-tong-f-1-2-2-2-3-2-n-2-faq68307.html)***
+
++ Đối với ***biến liên tục***: Ta gọi biến $X$ tuân theo phân phối đều liên tục trên $[a, b]$ nếu $X$ có hàm mật độ là:
+$f(x) = \frac{1}{b - a}, x \in [a, b]$ và $f(x) = 0, x \notin [a, b]$
+
+    ***Ta có:***
+    + $EX = \int_{-\infty}^{+\infty}xf(x)dx = \int_a^b\frac{x}{b - a}dx = \frac{a + b}{2}$
+    
+    + $VX = \int_a^b\frac{x^2}{b-a}dx - (\frac{a + b}{2})^2 = \frac{(b - a)^2}{12}$
+
+### 3.2 Phân phối nhị thức
+
+Xét 1 dãy có ***$n$ phép thử độc lập, giống nhau***. Trong mỗi phép thử sự kiện $A$ xuất hiện với xác suất $p$. Gọi $X$ là biến chỉ số lần xuất hiện sự kiên $A$ trong $n$ sự kiên đó. Khi đó biến $X$ sẽ ***tuân theo phân phối nhị thức*** có hàm xác suất là:
+\begin{equation}
+p(x) = C_n^xp^xq^{(n-x)}, 0 \le x \le n
+\end{equation}
+
+***Chú ý:*** khi $n=1$ thì phân phối nhị thức có 1 tên gọi khác
