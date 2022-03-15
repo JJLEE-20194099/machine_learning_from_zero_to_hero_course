@@ -348,3 +348,4 @@ Ta có: $P(x_1 \le X < x_2) = \int_{x_1}^{x_2}f(x)dx$
 
 ## 1.3 Một số phân phối bạn hay gặp
 
+### 1.3.1 Phân phối đều
