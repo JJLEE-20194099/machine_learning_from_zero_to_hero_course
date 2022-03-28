@@ -5,7 +5,7 @@ import matplotlib as mpl
 import pandas as pd
 
 
-def plot_1D(gmm, x, col):
+def plot_1D(gmm, x, legend, col_name):
     plt.hist(x, density=True)
     x = np.linspace(x.min(), x.max(), 100, endpoint=False)
     ys = np.zeros_like(x)
@@ -17,8 +17,10 @@ def plot_1D(gmm, x, col):
         ys += y
         j += 1
 
-    plt.xlabel(col)
+    plt.xlabel(col_name)
     plt.plot(x, ys)
+    if len(legend) != 0:
+        plt.legend(legend)
     plt.show()
 
 
@@ -46,6 +48,7 @@ def plot_2D(gmm, x, col, label):
     h = plt.subplot(111, aspect='equal')
     make_ellipses(gmm, h)
 
+    plt.figure(figsize=(10,7))
     plt.scatter(x[:, 0], x[:, 1], c=label['Species'], marker='x')
     plt.xlim(-3, 9)
     plt.ylim(-3, 9)

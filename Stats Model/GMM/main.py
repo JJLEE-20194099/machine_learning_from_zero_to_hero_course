@@ -5,15 +5,23 @@ import plot
 def IrisClassification(num_features, k=2):
     data = pd.read_csv('../Datasets/Iris.csv', sep=',', header=0)
     data = data.reset_index()
+    data = data.sample(frac=1)
+
+    train = data.iloc[:130, :]
+    test = data.iloc[130:, :]
+    
 
     if num_features == 1:
         cols = ['PetalLengthCm', 'PetalWidthCm', 'SepalLengthCm', 'SepalWidthCm']
         for col in cols:
-            x = data[[col]]
+            x = train[[col]]
             x = np.array(x)
             gmm = GMM(x, k)
             gmm.fit()
-            plot.plot_1D(gmm, x, col)
+            y_pred = gmm.predict(test, [col])
+            print(y_pred)
+            print(test.iloc[:, -1].to_numpy())
+            plot.plot_1D(gmm, x, col, [])
 
     else:
         replace_map = {'Species': {'Iris-virginica': 1, 'Iris-versicolor': 2,'Iris-setosa':3}}
@@ -36,11 +44,11 @@ def glassClassification(k=2):
 
         gmm = GMM(x, k)
         gmm.fit()
-        plot.plot_1D(gmm, x, col)
+        plot.plot_1D(gmm, x, col, [])
 
 def main():
     # glassClassification()
-    IrisClassification(2, 2)
+    IrisClassification(1, 3)
 
 if __name__ == "__main__":
     main()

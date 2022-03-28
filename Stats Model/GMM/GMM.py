@@ -74,6 +74,28 @@ class GMM:
             print(f'Loop {num_iters}: Log-likelihood value: {new_log_likelihood}')
 
         print(f'End at {num_iters}-th loop: Log-likelihood value: {new_log_likelihood}')
+    
+    def predict(self, X_test, cols):
+        X_test = X_test[cols].to_numpy()
+        m, d = X_test.shape
+        partition = np.empty(m, np.int)
+        distances = np.empty(self.k, np.float)
+
+        cov_inversers = [np.linalg.inv(cov) for cov in self.Sigma_arr]
+
+
+        for j in range(m):
+            x = X_test[j].reshape((1, d))
+
+            for i in range(self.k):
+                distances[i] = np.dot(np.dot((x - self.mu_arr[i]).T, cov_inversers[i]), x - self.mu_arr[i])
+            
+            partition[j] = np.argmin(distances)
+        
+        return partition
+
+
+                    
 
 
 
